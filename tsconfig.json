@@ -6,7 +6,6 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "declaration": true,
-    "sourceMap": true,
     "outDir": "dist",
     "removeComments": true,
     "forceConsistentCasingInFileNames": true,
