@@ -12,4 +12,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   plugins: ['jest', '@typescript-eslint'],
+  rules: {
+    'no-bitwise': 'off',
+  },
 };
