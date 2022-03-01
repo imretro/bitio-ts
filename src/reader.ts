@@ -64,4 +64,12 @@ export default class Reader {
   public get bitsPerElement(): number {
     return this.bytesPerElement * 8;
   }
+
+  /**
+   * The remaining number of bits that can be read.
+   */
+  public get remaining(): number {
+    const allBits = this.bytes.length * this.bitsPerElement;
+    return allBits - (this.index * this.bitsPerElement) - this.offset + 1;
+  }
 }

@@ -45,4 +45,25 @@ describe('Reader', () => {
       expect(reader.bitsPerElement).toBe(32);
     });
   });
+
+  describe('remaining', () => {
+    test('Uint32', () => {
+      const reader = new Reader(new Uint32Array([0, 0, 0]));
+
+      expect(reader.remaining).toBe(96);
+      reader.readBit();
+      expect(reader.remaining).toBe(95);
+      for (let i = 0; i < 32; i += 1) {
+        reader.readBit();
+      }
+      expect(reader.remaining).toBe(63);
+
+      for (let i = 0; i < 63; i += 1) {
+        reader.readBit();
+      }
+      expect(reader.remaining).toBe(0);
+      reader.readBit();
+      expect(reader.remaining).toBe(0);
+    });
+  });
 });
