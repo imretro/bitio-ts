@@ -1,0 +1,38 @@
+{
+  "name": "bitio",
+  "version": "0.1.0",
+  "description": "IO on bits",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src/*",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spenserblack/bitio-ts.git"
+  },
+  "keywords": [
+    "io",
+    "bits"
+  ],
+  "author": "Spenser Black <spenserblack01@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spenserblack/bitio-ts/issues"
+  },
+  "homepage": "https://github.com/spenserblack/bitio-ts#readme",
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jest": "^26.1.1",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.3",
+    "typescript": "~4.5.0"
+  }
+}
