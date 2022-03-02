@@ -6,4 +6,16 @@
 
 I/O with bits
 
+## Examples
+
+### Node
+
+```javascript
+const { Reader } = require('@imretro/bitio');
+const bytes = new Uint8Array([0xAB, 0xCD, 0xEF]);
+const reader = new Reader(bytes);
+
+console.log(reader.readBits(12)); // 2748 (0xABC)
+```
+
 ## [Documentation](https://imretro.github.io/bitio-ts/)
