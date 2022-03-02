@@ -8,8 +8,10 @@
     "build": "tsc",
     "build:docs": "typedoc src/index.ts",
     "lint": "eslint src/*",
+    "prepublishOnly": "npm run build",
     "test": "jest"
   },
+  "files": ["dist"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/spenserblack/bitio-ts.git"
