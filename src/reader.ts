@@ -66,6 +66,16 @@ export default class Reader {
     return result;
   }
 
+  /**
+   * Reads all remaining bits to a number. Equivalent to
+   * `reader.readBits(reader.remaining)`.
+   *
+   * @returns The remaining bits.
+   */
+  public readAll(): number {
+    return this.readBits(this.remaining);
+  }
+
   private nextNumber(): void {
     this.index += 1;
     this.offset = 1;

@@ -50,6 +50,25 @@ describe('Reader', () => {
     });
   });
 
+  describe('readAll', () => {
+    describe('Uint8', () => {
+      const bytes = new Uint8Array([0x12, 0x34, 0x56]);
+
+      test('read all bits', () => {
+        const reader = new Reader(bytes);
+
+        expect(reader.readAll()).toBe(0x123456);
+      });
+
+      test('read remaining bits', () => {
+        const reader = new Reader(bytes);
+        reader.readBits(4);
+
+        expect(reader.readAll()).toBe(0x23456);
+      });
+    });
+  });
+
   describe('bytesPerElement', () => {
     test('Uint32', () => {
       const reader = new Reader(new Uint32Array());
