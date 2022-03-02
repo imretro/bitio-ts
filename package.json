@@ -1,6 +1,6 @@
 {
   "name": "@imretro/bitio",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "IO on bits",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
   "files": ["dist"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/spenserblack/bitio-ts.git"
+    "url": "git+https://github.com/imretro/bitio-ts.git"
   },
   "keywords": [
     "io",
@@ -23,9 +23,9 @@
   "author": "Spenser Black <spenserblack01@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/spenserblack/bitio-ts/issues"
+    "url": "https://github.com/imretro/bitio-ts/issues"
   },
-  "homepage": "https://github.com/spenserblack/bitio-ts#readme",
+  "homepage": "https://github.com/imretro/bitio-ts#readme",
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
