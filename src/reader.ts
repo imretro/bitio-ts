@@ -46,6 +46,31 @@ export default class Reader {
     return (bit & 1) === 0 ? 0 : 1;
   }
 
+  /**
+   * Collects multiple bits into a number.
+   *
+   * For example, if 16 bits were collected from
+   * `new Uint8Array([0xAB, 0xCD])`, the resulting number is `0xABCD`.
+   *
+   * If `n` exceeds the number of available bits, an error will be thrown.
+   *
+   * @param n The number of bits to read.
+   *
+   * @returns The bits collected into a `number`.
+   */
+  public readBits(n: number): number {
+    if (n > this.remaining) {
+      throw new RangeError('n exceeds the number of remaining bits');
+    }
+    let result = 0;
+
+    for (let i = 1; i <= n; i += 1) {
+      const bit = this.readBit() as Bit;
+      result |= bit << (n - i);
+    }
+    return result;
+  }
+
   private nextNumber(): void {
     this.index += 1;
     this.offset = 1;

@@ -30,6 +30,26 @@ describe('Reader', () => {
     });
   });
 
+  describe('readBits', () => {
+    describe('Uint16', () => {
+      const bytes = new Uint16Array([0x1234, 0xABCD]);
+
+      test('sums up bits', () => {
+        const reader = new Reader(bytes);
+
+        const result = reader.readBits(32);
+
+        expect(result).toBe(0x1234ABCD);
+      });
+
+      test('n too large', () => {
+        const reader = new Reader(bytes);
+
+        expect(() => reader.readBits(33)).toThrow();
+      });
+    });
+  });
+
   describe('bytesPerElement', () => {
     test('Uint32', () => {
       const reader = new Reader(new Uint32Array());
