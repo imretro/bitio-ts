@@ -1,8 +1,8 @@
 # bitio
 
-[![CI](https://github.com/spenserblack/bitio-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/spenserblack/bitio-ts/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/spenserblack/bitio-ts/branch/main/graph/badge.svg?token=Yw13EnoPKZ)](https://codecov.io/gh/spenserblack/bitio-ts)
+[![CI](https://github.com/imretro/bitio-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/imretro/bitio-ts/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/imretro/bitio-ts/branch/main/graph/badge.svg?token=QsT7nr21hY)](https://codecov.io/gh/imretro/bitio-ts)
 
 I/O with bits
 
-## [Documentation](https://spenserblack.github.io/bitio-ts/)
+## [Documentation](https://imretro.github.io/bitio-ts/)
