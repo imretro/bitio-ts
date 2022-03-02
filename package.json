@@ -1,5 +1,5 @@
 {
-  "name": "bitio",
+  "name": "@imretro/bitio",
   "version": "0.1.1",
   "description": "IO on bits",
   "main": "dist/index.js",
