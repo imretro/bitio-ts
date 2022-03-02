@@ -79,7 +79,7 @@ export default class Reader {
   }
 
   /**
-   * The number of bits in each lement in the typed array.
+   * The number of bits in each element in the typed array.
    */
   public get bitsPerElement(): number {
     return this.bytesPerElement * 8;
