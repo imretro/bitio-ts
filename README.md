@@ -4,3 +4,5 @@
 [![codecov](https://codecov.io/gh/spenserblack/bitio-ts/branch/main/graph/badge.svg?token=Yw13EnoPKZ)](https://codecov.io/gh/spenserblack/bitio-ts)
 
 I/O with bits
+
+## [Documentation](https://spenserblack.github.io/bitio-ts/)
