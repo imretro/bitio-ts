@@ -1,7 +1,5 @@
 import type { Bit } from './types';
 
-type Bytes = Uint8Array | Uint16Array | Uint32Array;
-
 /**
  * Reads bits from a Uint* typed array.
  *
@@ -20,14 +18,11 @@ export default class Reader {
 
   private offset = 1;
 
-  private readonly bytes: Bytes;
-
-  constructor(bytes: Bytes) {
-    this.bytes = bytes;
+  constructor(private readonly bytes: Uint8Array | Uint16Array | Uint32Array) {
   }
 
   /**
-   * Reads a single bit.
+   * Reads a single [[Bit | bit]].
    *
    * @returns A single bit, or null if there are no more bits to read.
    */
