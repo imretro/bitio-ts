@@ -105,4 +105,23 @@ describe('Reader', () => {
       expect(reader.remaining).toBe(0);
     });
   });
+
+  test.each([
+    { value: 0, done: false },
+    { value: 1, done: false },
+    { value: 0, done: false },
+    { value: 1, done: false },
+    { value: 0, done: false },
+    { value: 1, done: false },
+    { value: 0, done: false },
+    { value: 1, done: false },
+    { value: 8, done: true },
+  ].map((want, i) => [i + 1, want]))('iterating %i times', (iterations, expected) => {
+    const reader = new Reader(new Uint8Array([0x55]));
+    const iter = reader[Symbol.iterator]();
+    for (let i = 1; i < iterations; i += 1) {
+      iter.next();
+    }
+    expect(iter.next()).toEqual(expected);
+  });
 });

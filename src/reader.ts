@@ -102,4 +102,23 @@ export default class Reader {
     const allBits = this.bytes.length * this.bitsPerElement;
     return allBits - (this.index * this.bitsPerElement) - this.offset + 1;
   }
+
+  /**
+   * Iterates over [[Bit | bits]].
+   *
+   * When done, returns the number of bits read.
+   *
+   * @returns Number of bits read.
+   */
+  public* [Symbol.iterator](): Generator<Bit, number, void> {
+    let count = 0;
+    while (true) {
+      const bit = this.readBit();
+      if (bit == null) {
+        return count;
+      }
+      yield bit;
+      count += 1;
+    }
+  }
 }
