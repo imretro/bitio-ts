@@ -1,6 +1,6 @@
 {
   "name": "@imretro/bitio",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "IO on bits",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,9 @@
     "prepublishOnly": "npm run build",
     "test": "jest"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/imretro/bitio-ts.git"
