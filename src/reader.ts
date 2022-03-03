@@ -4,12 +4,12 @@ import type { Bit } from './types';
  * Reads bits from a Uint* typed array.
  *
  * The number of bits per number depends on the size of the Uint. For example,
- * a `Uint8Array` results in 8 bits being read for each number in the array.
+ * a `Uint16Array` results in 16 bits being read for each number in the array.
  *
  * Bits are read from *largest* to *smallest.* For example, with
- * `new Uint8Array([1, 1 << 7])`, `1` is the last bit read from the first
+ * `new Uint16Array([1, 1 << 15])`, `1` is the last bit read from the first
  * element, and the first bit read from the second element. This order is
- * left-to-right, assuming little-endian numbers.
+ * left-to-right, assuming big-endian numbers.
  *
  * This acts as an iterator, meaning it is not possible to reverse a read.
  */
