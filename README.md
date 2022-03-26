@@ -1,4 +1,4 @@
-# bitio
+# @imretro/bitio
 
 [![npm](https://img.shields.io/npm/v/@imretro/bitio)](https://www.npmjs.com/package/@imretro/bitio)
 [![CI](https://github.com/imretro/bitio-ts/actions/workflows/ci.yml/badge.svg)](https://github.com/imretro/bitio-ts/actions/workflows/ci.yml)
