@@ -67,6 +67,24 @@ export default class Reader {
   }
 
   /**
+   * Reads a single byte.
+   *
+   * Will throw a `RangeError` if a partial byte is unread. For example, if
+   * 4 bits have been read, the other 4 must also be read before `readByte` is
+   * called.
+   *
+   * @returns An 8-bit number.
+   */
+  public readByte(): number {
+    if (this.remaining % 8 !== 0) {
+      throw new RangeError('Cannot read a partial byte as a full byte');
+    }
+    const b = this.bytes[this.index];
+    this.index += 1;
+    return b;
+  }
+
+  /**
    * Reads all remaining bits to a number. Equivalent to
    * `reader.readBits(reader.remaining)`.
    *
