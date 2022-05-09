@@ -50,6 +50,24 @@ describe('Reader', () => {
     });
   });
 
+  describe('readByte', () => {
+    test('reads a byte', () => {
+      const bytes = new Uint8Array([0xAB, 0x12]);
+      const reader = new Reader(bytes);
+
+      expect(reader.readByte()).toBe(0xAB);
+      expect(reader.readByte()).toBe(0x12);
+    });
+
+    test('does not read when there is a partial unread byte', () => {
+      const bytes = new Uint8Array([0xAB]);
+      const reader = new Reader(bytes);
+      reader.readBit();
+
+      expect(() => reader.readByte()).toThrow();
+    });
+  });
+
   describe('readAll', () => {
     describe('Uint8', () => {
       const bytes = new Uint8Array([0x12, 0x34, 0x56]);
