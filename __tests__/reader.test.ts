@@ -50,9 +50,12 @@ describe('Reader', () => {
     });
   });
 
-  describe('readByte', () => {
+  describe.each([
+    [new Uint8Array([0xAB, 0x12, 0x34, 0x56])],
+    [new Uint16Array([0xAB12, 0x3456])],
+    [new Uint32Array([0xAB123456])],
+  ])('readByte %p', (bytes) => {
     test('reads a byte', () => {
-      const bytes = new Uint8Array([0xAB, 0x12]);
       const reader = new Reader(bytes);
 
       expect(reader.readByte()).toBe(0xAB);
@@ -60,7 +63,6 @@ describe('Reader', () => {
     });
 
     test('does not read when there is a partial unread byte', () => {
-      const bytes = new Uint8Array([0xAB]);
       const reader = new Reader(bytes);
       reader.readBit();
 
@@ -145,6 +147,20 @@ describe('Reader', () => {
       expect(reader.remaining).toBe(0);
       reader.readBit();
       expect(reader.remaining).toBe(0);
+    });
+  });
+
+  describe.each([
+    ['Uint8', new Uint8Array([0, 0, 0, 0])],
+    ['Uint16', new Uint16Array([0, 0])],
+    ['Uint32', new Uint32Array([0])],
+  ])('byteIndex (%s)', (_name, bytes) => {
+    test.each([[0], [1], [2], [3]])('after reading %d bytes', (readCount) => {
+      const reader = new Reader(bytes);
+      for (let i = 0; i < readCount; i += 1) {
+        reader.readBits(8);
+      }
+      expect(reader.byteIndex).toBe(readCount);
     });
   });
 
