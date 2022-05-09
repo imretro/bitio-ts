@@ -86,6 +86,27 @@ export default class Reader {
   }
 
   /**
+   * Reads `n` bytes.
+   *
+   * Throws on partial bytes (see [[`readByte`]]).
+   *
+   * Throws when there are not enough bytes to read.
+   *
+   * @returns An array of 8-bit numbers.
+   */
+  public readBytes(n: number): number[] {
+    if (n * 8 > this.remaining) {
+      throw new RangeError('Not enough bytes to read.');
+    }
+
+    const bytes: number[] = new Array(n);
+    for (let i = 0; i < bytes.length; i += 1) {
+      bytes[i] = this.readByte();
+    }
+    return bytes;
+  }
+
+  /**
    * Reads all remaining bits to a number. Equivalent to
    * `reader.readBits(reader.remaining)`.
    *
