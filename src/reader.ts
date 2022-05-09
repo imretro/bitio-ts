@@ -122,6 +122,16 @@ export default class Reader {
   }
 
   /**
+   * The "index" of the byte that the iterator is on.
+   *
+   * Also can be used as a count of the bytes that have been read.
+   */
+  public get byteIndex(): number {
+    return (this.index * this.bytesPerElement)
+      + Math.floor((this.offset - 1) / 8);
+  }
+
+  /**
    * Iterates over [[Bit | bits]].
    *
    * When done, returns the number of bits read.

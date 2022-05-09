@@ -124,6 +124,20 @@ describe('Reader', () => {
     });
   });
 
+  describe.each([
+    ['Uint8', new Uint8Array([0, 0, 0, 0])],
+    ['Uint16', new Uint16Array([0, 0])],
+    ['Uint32', new Uint32Array([0])],
+  ])('byteIndex (%s)', (_name, bytes) => {
+    test.each([[0], [1], [2], [3]])('after reading %d bytes', (readCount) => {
+      const reader = new Reader(bytes);
+      for (let i = 0; i < readCount; i += 1) {
+        reader.readBits(8);
+      }
+      expect(reader.byteIndex).toBe(readCount);
+    });
+  });
+
   test.each([
     { value: 0, done: false },
     { value: 1, done: false },
