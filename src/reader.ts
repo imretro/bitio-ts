@@ -33,10 +33,7 @@ export default class Reader {
 
     const bit = this.bytes[this.index] >> (this.bitsPerElement - this.offset);
 
-    this.offset += 1;
-    if (this.offset > this.bitsPerElement) {
-      this.nextNumber();
-    }
+    this.nextOffset();
 
     return (bit & 1) === 0 ? 0 : 1;
   }
@@ -79,9 +76,13 @@ export default class Reader {
     if (this.remaining % 8 !== 0) {
       throw new RangeError('Cannot read a partial byte as a full byte');
     }
-    const b = this.bytes[this.index];
-    this.index += 1;
-    return b;
+    // NOTE Only bitshift every 8 bits
+    // const shift = ((this.byteCount - this.byteIndex) % this.bytesPerElement) * 8;
+    const shift = ((this.bytesPerElement - 1) - (this.byteIndex % this.bytesPerElement)) * 8;
+    const b = this.bytes[this.index] >> shift;
+    this.nextOffset(8);
+    // NOTE Reduce to a single byte
+    return b & 0xFF;
   }
 
   /**
@@ -92,6 +93,13 @@ export default class Reader {
    */
   public readAll(): number {
     return this.readBits(this.remaining);
+  }
+
+  private nextOffset(n = 1) {
+    this.offset += n;
+    if (this.offset > this.bitsPerElement) {
+      this.nextNumber();
+    }
   }
 
   private nextNumber(): void {
