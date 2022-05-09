@@ -70,7 +70,7 @@ describe('Reader', () => {
     });
   });
 
-  describe('readByte', () => {
+  describe('readBytes', () => {
     test('reads two bytes', () => {
       const bytes = new Uint8Array([0xAB, 0x12, 0x89]);
       const reader = new Reader(bytes);
