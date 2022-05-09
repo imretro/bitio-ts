@@ -70,7 +70,11 @@ describe('Reader', () => {
     });
   });
 
-  describe('readBytes', () => {
+  describe.each([
+    [new Uint8Array([0xAB, 0x12, 0x34, 0x56])],
+    [new Uint16Array([0xAB12, 0x3456])],
+    [new Uint32Array([0xAB123456])],
+  ])('readBytes %p', () => {
     test('reads two bytes', () => {
       const bytes = new Uint8Array([0xAB, 0x12, 0x89]);
       const reader = new Reader(bytes);
