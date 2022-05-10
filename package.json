@@ -20,7 +20,9 @@
   },
   "keywords": [
     "io",
-    "bits"
+    "bit",
+    "bits",
+    "binary"
   ],
   "author": "Spenser Black <spenserblack01@gmail.com>",
   "license": "MIT",
