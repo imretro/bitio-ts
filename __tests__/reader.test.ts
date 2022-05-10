@@ -74,16 +74,14 @@ describe('Reader', () => {
     [new Uint8Array([0xAB, 0x12, 0x34, 0x56])],
     [new Uint16Array([0xAB12, 0x3456])],
     [new Uint32Array([0xAB123456])],
-  ])('readBytes %p', () => {
+  ])('readBytes %p', (bytes) => {
     test('reads two bytes', () => {
-      const bytes = new Uint8Array([0xAB, 0x12, 0x89]);
       const reader = new Reader(bytes);
 
       expect(reader.readBytes(2)).toEqual([0xAB, 0x12]);
     });
 
     test('does not read when there is a partial unread byte', () => {
-      const bytes = new Uint8Array([0xAB, 0xCD]);
       const reader = new Reader(bytes);
       reader.readBit();
 
@@ -91,10 +89,9 @@ describe('Reader', () => {
     });
 
     test('throws when not enough bytes to read', () => {
-      const bytes = new Uint8Array([0xAB, 0xCD]);
       const reader = new Reader(bytes);
 
-      expect(() => reader.readBytes(3)).toThrow();
+      expect(() => reader.readBytes(5)).toThrow();
     });
   });
 
