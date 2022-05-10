@@ -59,6 +59,16 @@ describe('Reader', () => {
     });
   });
 
+  describe('collectBits', () => {
+    test('collects bits into a number', () => {
+      expect(Reader.collectBits([1, 1, 0, 1])).toBe(0b1101);
+    });
+
+    test('returns 0 if there are no bits', () => {
+      expect(Reader.collectBits([])).toBe(0);
+    });
+  });
+
   describe.each([
     [new Uint8Array([0xAB, 0x12, 0x34, 0x56])],
     [new Uint16Array([0xAB12, 0x3456])],
