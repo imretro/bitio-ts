@@ -60,6 +60,8 @@ describe('Reader', () => {
 
       expect(reader.readByte()).toBe(0xAB);
       expect(reader.readByte()).toBe(0x12);
+      expect(reader.readByte()).toBe(0x34);
+      expect(reader.readByte()).toBe(0x56);
     });
 
     test('does not read when there is a partial unread byte', () => {
@@ -67,6 +69,17 @@ describe('Reader', () => {
       reader.readBit();
 
       expect(() => reader.readByte()).toThrow();
+    });
+
+    test('returns null when there are no more bytes to read', () => {
+      const reader = new Reader(bytes);
+
+      // NOTE Reading all bytes
+      for (let i = 0; i < 4; i++) {
+        reader.readByte();
+      }
+
+      expect(reader.readByte()).toBeNull();
     });
   });
 
@@ -81,17 +94,17 @@ describe('Reader', () => {
       expect(reader.readBytes(2)).toEqual([0xAB, 0x12]);
     });
 
+    test('reads null for extra bytes', () => {
+      const reader = new Reader(bytes);
+
+      expect(reader.readBytes(5)).toEqual([0xAB, 0x12, 0x34, 0x56, null]);
+    });
+
     test('does not read when there is a partial unread byte', () => {
       const reader = new Reader(bytes);
       reader.readBit();
 
       expect(() => reader.readBytes(1)).toThrow();
-    });
-
-    test('throws when not enough bytes to read', () => {
-      const reader = new Reader(bytes);
-
-      expect(() => reader.readBytes(5)).toThrow();
     });
   });
 

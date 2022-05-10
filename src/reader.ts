@@ -66,18 +66,24 @@ export default class Reader {
   /**
    * Reads a single byte.
    *
+   * Returns `null` if there is no byte to read.
+   *
    * Will throw a `RangeError` if a partial byte is unread. For example, if
    * 4 bits have been read, the other 4 must also be read before `readByte` is
    * called.
    *
    * @returns An 8-bit number.
    */
-  public readByte(): number {
+  public readByte(): number | null {
     if (this.remaining % 8 !== 0) {
       throw new RangeError('Cannot read a partial byte as a full byte');
     }
     // NOTE Only bitshift every 8 bits
-    const shift = ((this.bytesPerElement - 1) - (this.byteIndex % this.bytesPerElement)) * 8;
+    const { byteCount, byteIndex } = this;
+    if (byteIndex >= byteCount) {
+      return null;
+    }
+    const shift = ((this.bytesPerElement - 1) - (byteIndex % this.bytesPerElement)) * 8;
     const b = this.bytes[this.index] >> shift;
     this.nextOffset(8);
     // NOTE Reduce to a single byte
@@ -87,18 +93,14 @@ export default class Reader {
   /**
    * Reads `n` bytes.
    *
-   * Throws on partial bytes (see [[`readByte`]]).
+   * Bytes that do not exist will be `null`.
    *
-   * Throws when there are not enough bytes to read.
+   * Throws on partial bytes (see [[`readByte`]]).
    *
    * @returns An array of 8-bit numbers.
    */
-  public readBytes(n: number): number[] {
-    if (n * 8 > this.remaining) {
-      throw new RangeError('Not enough bytes to read.');
-    }
-
-    const bytes: number[] = new Array(n);
+  public readBytes(n: number): Array<number | null> {
+    const bytes = new Array<number | null>(n);
     for (let i = 0; i < bytes.length; i += 1) {
       bytes[i] = this.readByte();
     }
@@ -157,6 +159,13 @@ export default class Reader {
   public get byteIndex(): number {
     return (this.index * this.bytesPerElement)
       + Math.floor((this.offset - 1) / 8);
+  }
+
+  /**
+   * The total number of bytes in the underlying array.
+   */
+  private get byteCount(): number {
+    return this.bytesPerElement * this.bytes.length;
   }
 
   /**
