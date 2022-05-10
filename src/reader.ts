@@ -46,6 +46,8 @@ export default class Reader {
    *
    * If `n` exceeds the number of available bits, an error will be thrown.
    *
+   * See also [[`readBitsSafe`]].
+   *
    * @param n The number of bits to read.
    *
    * @returns The bits collected into a `number`.
@@ -61,6 +63,25 @@ export default class Reader {
       result |= bit << (n - i);
     }
     return result;
+  }
+
+  /**
+   * Collects `n` bits into an array.
+   *
+   * Unlike [[`readBits`]] does not throw an error if there are not enough
+   * bits to read, but uses `null` for any extra index that could not have a
+   * bit read to it.
+   *
+   * @param n The number of bits to try to read.
+   *
+   * @returns An array of bits, with `null` for unreadable bits.
+   */
+  public readBitsSafe(n: number): Array<Bit | null> {
+    const bits = new Array<Bit | null>(n);
+    for (let i = 0; i < bits.length; i += 1) {
+      bits[i] = this.readBit();
+    }
+    return bits;
   }
 
   /**

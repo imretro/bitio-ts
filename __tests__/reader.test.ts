@@ -50,6 +50,15 @@ describe('Reader', () => {
     });
   });
 
+  describe('readBitsSafe', () => {
+    test('collects bits into an array', () => {
+      const bytes = new Uint8Array([0b10110101]);
+      const reader = new Reader(bytes);
+
+      expect(reader.readBitsSafe(9)).toEqual([1, 0, 1, 1, 0, 1, 0, 1, null]);
+    });
+  });
+
   describe.each([
     [new Uint8Array([0xAB, 0x12, 0x34, 0x56])],
     [new Uint16Array([0xAB12, 0x3456])],
