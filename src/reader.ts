@@ -77,7 +77,6 @@ export default class Reader {
       throw new RangeError('Cannot read a partial byte as a full byte');
     }
     // NOTE Only bitshift every 8 bits
-    // const shift = ((this.byteCount - this.byteIndex) % this.bytesPerElement) * 8;
     const shift = ((this.bytesPerElement - 1) - (this.byteIndex % this.bytesPerElement)) * 8;
     const b = this.bytes[this.index] >> shift;
     this.nextOffset(8);
