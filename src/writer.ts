@@ -28,7 +28,7 @@ export default class Writer extends BitIterator {
     if (this.index >= this.bytes.length) {
       return false;
     }
-    dst[this.index] |= bit << (this.bitsPerElement - this.offset);
+    this.bytes[this.index] |= bit << (this.bitsPerElement - this.offset);
     this.nextOffset();
 
     return true;
