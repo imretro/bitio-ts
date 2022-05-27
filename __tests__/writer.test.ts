@@ -10,8 +10,8 @@ describe('Writer', () => {
 
         bits.forEach((b) => writer.writeBit(b));
 
-        expect(writer[0]).toBe(0b10101111);
-        expect(writer[1]).toBe(0b00001100);
+        expect(dst[0]).toBe(0b10101111);
+        expect(dst[1]).toBe(0b00001100);
       });
     });
   });
