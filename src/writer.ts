@@ -16,4 +16,21 @@ import BitIterator from './bit-iterator';
  */
 export default class Writer extends BitIterator {
   constructor(dst: Uint8Array | Uint16Array | Uint32Array);
+
+  /**
+   * Writes a single [[Bit | bit]].
+   * 
+   * Can fail if there is no more room to write bits.
+   *
+   * @returns `true` if the bit was successfully written.
+   */
+  public writeBit(bit: Bit): boolean {
+   if (this.index >= this.bytes.length) {
+     return false;
+   }
+   dst[this.index] |= bit << (this.bitsPerElement - this.offset);
+   this.nextOffset();
+
+   return true;
+  }
 }
