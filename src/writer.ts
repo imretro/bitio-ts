@@ -1,3 +1,6 @@
+import { Bit } from './types';
+import BitIterator from './bit-iterator';
+
 /**
  * Writes bits from a Uint* typed array.
  *
@@ -11,6 +14,8 @@
  *
  * It is not possible to reverse a write.
  */
-export default class Writer {
-  constructor(private readonly dst: Uint8Array | Uint16Array | Uint32Array) {}
+export default class Writer extends BitIterator {
+  constructor(dst: Uint8Array | Uint16Array | Uint32Array) {
+    super(dst);
+  }
 }
