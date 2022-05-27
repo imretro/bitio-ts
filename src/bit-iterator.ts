@@ -8,7 +8,6 @@ export default abstract class BitIterator {
 
   constructor(protected readonly bytes: Uint8Array | Uint16Array | Uint32Array) {}
 
-
   protected nextOffset(n = 1) {
     this.offset += n;
     if (this.offset > this.bitsPerElement) {
@@ -21,11 +20,10 @@ export default abstract class BitIterator {
     this.offset = 1;
   }
 
-
   /**
    * The number of bytes in each element in the typed array.
    */
-   public get bytesPerElement(): number {
+  public get bytesPerElement(): number {
     return this.bytes.BYTES_PER_ELEMENT;
   }
 
@@ -36,31 +34,28 @@ export default abstract class BitIterator {
     return this.bytesPerElement * 8;
   }
 
-
   /**
    * The remaining number of bits that can be iterated over.
    */
-   public get remaining(): number {
+  public get remaining(): number {
     const allBits = this.bytes.length * this.bitsPerElement;
     return allBits - (this.index * this.bitsPerElement) - this.offset + 1;
   }
-
 
   /**
    * The "index" of the byte that the iterator is on.
    *
    * Also can be used as a count of the bytes that have been iterated over.
    */
-   public get byteIndex(): number {
+  public get byteIndex(): number {
     return (this.index * this.bytesPerElement)
       + Math.floor((this.offset - 1) / 8);
   }
 
-
   /**
    * The total number of bytes in the underlying array.
    */
-   protected get byteCount(): number {
+  protected get byteCount(): number {
     return this.bytesPerElement * this.bytes.length;
   }
 }
