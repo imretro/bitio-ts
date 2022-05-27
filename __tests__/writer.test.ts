@@ -15,4 +15,18 @@ describe('Writer', () => {
       });
     });
   });
+
+  describe('writeBit', () => {
+    test.each([
+      [new Uint8Array(1), 8],
+      [new Uint16Array(1), 16],
+      [new Uint32Array(1), 32],
+    ])("%p doesn't return false until %d bits written to it", (dst, bits) => {
+      const writer = new Writer(dst);
+      for (let i = 0; i < bits; i += 1) {
+        expect(writer.writeBit(0)).toBe(true);
+      }
+      expect(writer.writeBit(0)).toBe(false);
+    });
+  });
 });
