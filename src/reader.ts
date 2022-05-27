@@ -15,7 +15,9 @@ import BitIterator from './bit-iterator';
  * This acts as an iterator, meaning it is not possible to reverse a read.
  */
 export default class Reader extends BitIterator {
-  constructor(src: Uint8Array | Uint16Array | Uint32Array);
+  constructor(src: Uint8Array | Uint16Array | Uint32Array) {
+    super(src);
+  }
 
   /**
    * Reads a single [[Bit | bit]].
