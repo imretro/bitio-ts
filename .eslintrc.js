@@ -14,5 +14,8 @@ module.exports = {
   plugins: ['jest', '@typescript-eslint'],
   rules: {
     'no-bitwise': 'off',
+    // NOTE Useless constructors used for documentation purposes
+    'no-useless-constructor': 'off',
+    '@typescript-eslint/no-useless-constructor': 'off',
   },
 };
