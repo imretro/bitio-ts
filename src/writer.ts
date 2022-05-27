@@ -19,18 +19,18 @@ export default class Writer extends BitIterator {
 
   /**
    * Writes a single [[Bit | bit]].
-   * 
+   *
    * Can fail if there is no more room to write bits.
    *
    * @returns `true` if the bit was successfully written.
    */
   public writeBit(bit: Bit): boolean {
-   if (this.index >= this.bytes.length) {
-     return false;
-   }
-   dst[this.index] |= bit << (this.bitsPerElement - this.offset);
-   this.nextOffset();
+    if (this.index >= this.bytes.length) {
+      return false;
+    }
+    dst[this.index] |= bit << (this.bitsPerElement - this.offset);
+    this.nextOffset();
 
-   return true;
+    return true;
   }
 }
