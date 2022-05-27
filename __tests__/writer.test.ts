@@ -4,7 +4,7 @@ describe('Writer', () => {
   describe('Uint8', () => {
     describe('writeBit', () => {
       test('writes bits', () => {
-        const bits = [1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0];
+        const bits: (0 | 1)[] = [1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0];
         const dst = new Uint8Array(2);
         const writer = new Writer(dst);
 
