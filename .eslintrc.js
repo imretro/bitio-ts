@@ -16,6 +16,6 @@ module.exports = {
     'no-bitwise': 'off',
     // NOTE Useless constructors used for documentation purposes
     'no-useless-constructor': 'off',
-    '@typescript-eslint/no-useless-constructor': false,
+    '@typescript-eslint/no-useless-constructor': 'off',
   },
 };
