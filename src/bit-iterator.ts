@@ -1,4 +1,7 @@
 /**
+ * @ignore
+ * @internal
+ *
  * Base class for [[`Reader`]] and [[`Writer`]] to iterate over bits.
  */
 export default abstract class BitIterator {
