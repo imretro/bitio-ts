@@ -1,3 +1,4 @@
+import type { Bit } from '../src/index';
 import Writer from '../src/writer';
 
 describe('Writer', () => {
@@ -28,5 +29,27 @@ describe('Writer', () => {
       }
       expect(writer.writeBit(0)).toBe(false);
     });
+  });
+
+  describe('writeBits', () => {
+    test.each([
+      [[0, 0, 1, 1, 0, 1, 0, 1] as Bit[], 8, 0b00110101],
+      [{ bits: 0b00110101, n: 8 }, 8, 0b00110101],
+      [[0, 0, 0, 1, 1, 0, 1, 0, 1] as Bit[], 8, 0b00011010],
+      [{ bits: 0b00110101, n: 9 }, 8, 0b00011010],
+    ])('writeBits(%p) writes %d bits: %d', (bits, expectedCount, expectedBits) => {
+      const dst = new Uint8Array(1);
+      const writer = new Writer(dst);
+
+      const count = writer.writeBits(bits);
+      expect(dst[0]).toBe(expectedBits);
+      expect(count).toBe(expectedCount);
+    });
+  });
+
+  test('throws when n < 0', () => {
+    const writer = new Writer(new Uint8Array(0));
+
+    expect(() => writer.writeBits({ bits: 0, n: -1 })).toThrow(RangeError);
   });
 });

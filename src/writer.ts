@@ -35,4 +35,44 @@ export default class Writer extends BitIterator {
 
     return true;
   }
+
+  /**
+   * Writes multiple [[Bit | bits]].
+   *
+   * Can either take an array of bits, or the bits collected into a number. If
+   * the bits are collected into a number, `n` is the number of bits to write.
+   * This is to differentiate between `0` meaning no more bits and `0` being
+   * leading zero bits. If the bits are collected into a number, then they will
+   * be written from the largest bit to the smallest.
+   *
+   * For example, `{ bits: 0b1100, n: 5 }` and `[0, 1, 1, 0, 0]` are equivalent.
+   *
+   * This will silently fail when there is no more room to write bits. The
+   * actual number of bits written can be determined by the return value.
+   *
+   * @param bits The bits to write.
+   *
+   * @returns The number of bits that were read.
+   */
+  writeBits(bits: Bit[] | { bits: number, n: number }): number {
+    if (Array.isArray(bits)) {
+      const writable = bits.slice(0, Math.min(bits.length, this.remaining));
+      writable.forEach((bit) => this.writeBit(bit));
+      return writable.length;
+    }
+
+    const { bits: bitNumber, n } = bits;
+
+    if (n < 0) {
+      throw new RangeError('n cannot be less than 0');
+    }
+
+    for (let i = 0; i < n; i += 1) {
+      const shift = (n - i) - 1;
+      if (!this.writeBit(((bitNumber >> shift) & 1) as Bit)) {
+        return i;
+      }
+    }
+    return n;
+  }
 }
