@@ -1,6 +1,6 @@
 {
   "name": "@imretro/bitio",
-  "version": "0.3.0-minimal",
+  "version": "0.3.0",
   "description": "IO on bits",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
