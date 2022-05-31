@@ -127,8 +127,8 @@ export default class Writer extends BitIterator {
    *
    * For example, `{ bytes: 0x1234, n: 2 }` and `[0x12, 0x34]` are equivalent.
    *
-   * This will silently fail when there is no more room to write bits. The
-   * actual number of bits written can be determined by the return value.
+   * This will silently fail when there is no more room to write bytes. The
+   * actual number of bytes written can be determined by the return value.
    *
    * @param bytes The bytes to write.
    *
