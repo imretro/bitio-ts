@@ -83,4 +83,76 @@ export default class Writer extends BitIterator {
     }
     return n;
   }
+
+  /**
+   * Writes a single byte.
+   *
+   * Throws a `RangeError` if the byte is not in the range `[0, 256)`.
+   * Will also throw a `RangeError` if a byte is in a "partial write" status,
+   * caused by writing some bits but not a full byte before attempting to
+   * write a byte.
+   *
+   * @param b The byte to write.
+   *
+   * @returns The true if the byte was written.
+   */
+  public writeByte(b: number): boolean {
+    if (b < 0 || b > 0xFF) {
+      throw new RangeError(`b should be within [0, 256), want ${b}`);
+    }
+    if (this.remaining % 8 !== 0) {
+      throw new RangeError('Cannot write a full byte with a pending partial byte');
+    }
+
+    const { byteCount, byteIndex } = this;
+    if (byteIndex >= byteCount) {
+      return false;
+    }
+
+    const shift = ((this.bytesPerElement - 1) - (byteIndex % this.bytesPerElement)) * 8;
+    this.bytes[this.index] |= b << shift;
+    this.nextOffset(8);
+
+    return true;
+  }
+
+  /**
+   * Writes bytes.
+   *
+   * Can either take an array of bytes, or the bytes collected into a number. If
+   * the bytes are collected into a number, `n` is the number of bytes to write.
+   * This is to differentiate between `0` meaning no more bytes and `0` being
+   * leading zero bytes. If the bytes are collected into a number, then they will
+   * be written from the largest byte to the smallest.
+   *
+   * For example, `{ bytes: 0x1234, n: 5 }` and `[0x12, 0x34]` are equivalent.
+   *
+   * This will silently fail when there is no more room to write bits. The
+   * actual number of bits written can be determined by the return value.
+   *
+   * @param bytes The bytes to write.
+   *
+   * @returns The number of bytes that were written.
+   */
+  public writeBytes(bytes: number[] | { bytes: number, n: number }): number {
+    if (Array.isArray(bytes)) {
+      const writable = bytes.slice(0, Math.min(bytes.length, Math.floor(this.remaining / 8)));
+      writable.forEach((b) => this.writeByte(b));
+      return writable.length;
+    }
+
+    const { bytes: byteNumber, n } = bytes;
+
+    if (n < 0) {
+      throw new RangeError('n cannot be less than 0');
+    }
+
+    for (let i = 0; i < n; i += 1) {
+      const shift = ((n - i) - 1) * 8;
+      if (!this.writeByte((byteNumber >> shift) & 0xFF)) {
+        return i;
+      }
+    }
+    return n;
+  }
 }
