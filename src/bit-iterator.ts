@@ -5,12 +5,24 @@
  * Base class for [[`Reader`]] and [[`Writer`]] to iterate over bits.
  */
 export default abstract class BitIterator {
+  /**
+   * @ignore
+   * @internal
+   */
   protected index = 0;
 
+  /**
+   * @ignore
+   * @internal
+   */
   protected offset = 1;
 
   constructor(protected readonly bytes: Uint8Array | Uint16Array | Uint32Array) {}
 
+  /**
+   * @ignore
+   * @internal
+   */
   protected nextOffset(n = 1) {
     this.offset += n;
     if (this.offset > this.bitsPerElement) {
@@ -56,6 +68,9 @@ export default abstract class BitIterator {
   }
 
   /**
+   * @ignore
+   * @internal
+   *
    * The total number of bytes in the underlying array.
    */
   protected get byteCount(): number {
