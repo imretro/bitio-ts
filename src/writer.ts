@@ -75,4 +75,36 @@ export default class Writer extends BitIterator {
     }
     return n;
   }
+
+  /**
+   * Writes a single byte.
+   *
+   * Throws a `RangeError` if the byte is not in the range `[0, 256)`.
+   * Will also throw a `RangeError` if a byte is in a "partial write" status,
+   * caused by writing some bits but not a full byte before attempting to
+   * write a byte.
+   *
+   * @param b The byte to write.
+   *
+   * @returns The true if the byte was written.
+   */
+  public writeByte(b: number): boolean {
+    if (b < 0 || b > 0xFF) {
+      throw new RangeError(`b should be within [0, 256), want ${b}`);
+    }
+    if (this.remaining % 8 !== 0) {
+      throw new RangeError('Cannot write a full byte with a pending partial byte');
+    }
+
+    const { byteCount, byteIndex } = this;
+    if (byteIndex >= byteCount) {
+      return false;
+    }
+
+    const shift = ((this.bytesPerElement - 1) - (byteIndex % this.bytesPerElement)) * 8;
+    this.bytes[this.index] |= b << shift;
+    this.nextOffset(8);
+
+    return true;
+  }
 }

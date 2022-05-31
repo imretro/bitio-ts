@@ -52,4 +52,50 @@ describe('Writer', () => {
       expect(() => writer.writeBits({ bits: 0, n: -1 })).toThrow(RangeError);
     });
   });
+
+  describe('writeByte', () => {
+    test.each([
+      [new Uint8Array(4), [0xAB, 0x12, 0xEF, 0x89], [0xAB, 0x12, 0xEF, 0x89]],
+      [new Uint16Array(2), [0xAB, 0x12, 0xEF, 0x89], [0xAB12, 0xEF89]],
+      [new Uint32Array(1), [0xAB, 0x12, 0xEF, 0x89], [0xAB12EF89]],
+    ])('%p receives %p', (dst, input, want) => {
+      const writer = new Writer(dst);
+
+      input.forEach((b) => {
+        expect(writer.writeByte(b)).toBe(true);
+      });
+
+      expect([...dst]).toEqual(want);
+    });
+
+    test.each([[-1], [0x100]])('throws with %d', (input) => {
+      const writer = new Writer(new Uint8Array(1));
+
+      expect(() => writer.writeByte(input)).toThrow(RangeError);
+    });
+
+    test('Does not write when dst is full', () => {
+      const writer = new Writer(new Uint8Array(0));
+
+      expect(writer.writeByte(0)).toBe(false);
+    });
+
+    test.each([
+      [1],
+      [2],
+      [3],
+      [4],
+      [5],
+      [6],
+      [7],
+    ])('Throws when %d bits have been written', (bitCount) => {
+      const writer = new Writer(new Uint8Array(1));
+
+      for (let i = 0; i < bitCount; i += 1) {
+        writer.writeBit(0);
+      }
+
+      expect(() => writer.writeByte(0)).toThrow(RangeError);
+    });
+  });
 });
