@@ -45,11 +45,11 @@ describe('Writer', () => {
       expect(dst[0]).toBe(expectedBits);
       expect(count).toBe(expectedCount);
     });
-  });
 
-  test('throws when n < 0', () => {
-    const writer = new Writer(new Uint8Array(0));
+    test('throws when n < 0', () => {
+      const writer = new Writer(new Uint8Array(0));
 
-    expect(() => writer.writeBits({ bits: 0, n: -1 })).toThrow(RangeError);
+      expect(() => writer.writeBits({ bits: 0, n: -1 })).toThrow(RangeError);
+    });
   });
 });
