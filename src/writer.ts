@@ -15,6 +15,14 @@ import BitIterator from './bit-iterator';
  * It is not possible to reverse a write.
  */
 export default class Writer extends BitIterator {
+  /**
+   * Creates a writer that writes to `dst`.
+   *
+   * Currently, it is assumed that `dst` is empty. If it is not, bits that were
+   * previously set may remain set.
+   *
+   * @param dst Where to write the bits to.
+   */
   constructor(dst: Uint8Array | Uint16Array | Uint32Array) {
     super(dst);
   }
