@@ -60,7 +60,7 @@ export default class Writer extends BitIterator {
    *
    * @param bits The bits to write.
    *
-   * @returns The number of bits that were read.
+   * @returns The number of bits that were written.
    */
   writeBits(bits: Bit[] | { bits: number, n: number }): number {
     if (Array.isArray(bits)) {
