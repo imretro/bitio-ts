@@ -125,7 +125,7 @@ export default class Writer extends BitIterator {
    * leading zero bytes. If the bytes are collected into a number, then they will
    * be written from the largest byte to the smallest.
    *
-   * For example, `{ bytes: 0x1234, n: 5 }` and `[0x12, 0x34]` are equivalent.
+   * For example, `{ bytes: 0x1234, n: 2 }` and `[0x12, 0x34]` are equivalent.
    *
    * This will silently fail when there is no more room to write bits. The
    * actual number of bits written can be determined by the return value.
