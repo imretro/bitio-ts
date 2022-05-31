@@ -98,4 +98,25 @@ describe('Writer', () => {
       expect(() => writer.writeByte(0)).toThrow(RangeError);
     });
   });
+
+  describe('writeBytes', () => {
+    test.each([
+      [[0xAB, 0x12], 2, 0xAB12],
+      [{ bytes: 0xAB12, n: 2}, 2, 0xAB12],
+      [[0xAB, 0x12, 0x56], 2, 0xAB12],
+      [{ bytes: 0x00AB1256, n: 3}, 2, 0x00AB12],
+    ])('writeBytes(%p) writes %d bytes: %p', (bytes, expectedCount, expectedBytes) => {
+      const dst = new Uint16Array(1);
+      const writer = new Writer(dst);
+
+      expect(writer.writeBytes(bytes)).toBe(expectedCount);
+      expect(dst[0]).toBe(expectedBytes);
+    });
+
+    test('throws when n < 0', () => {
+      const writer = new Writer(new Uint8Array(0));
+
+      expect(() => writer.writeBytes({ bytes: 0, n: -1 })).toThrow(RangeError);
+    });
+  });
 });
